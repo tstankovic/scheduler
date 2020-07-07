@@ -25,7 +25,12 @@ router.post(
     const userId = req.user.id;
     const { description, day, month, year } = req.body;
     try {
-      const existingEvent = await Event.findOne({ day, month, year });
+      const existingEvent = await Event.findOne({
+        day,
+        month,
+        year,
+        user: userId,
+      });
       if (existingEvent) {
         const error = new Error('Event for this date already exists');
         error.code = 422;
